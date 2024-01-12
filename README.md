@@ -3,7 +3,6 @@
 <sup>[Сделать форк на GitHub](https://github.com/mementomorri/python-cheatsheet), [часто задаваемые вопросы - FAQ](https://github.com/mementomorri/python-cheatsheet/wiki/Frequently-Asked-Questions).
 </sup>
 
-
 Содержание
 --------
 **&nbsp;&nbsp;&nbsp;** **1. Наборы:** **&nbsp;** **[`List`](#list)**__,__ **[`Dictionary`](#dictionary)**__,__ **[`Set`](#set)**__,__ **[`Tuple`](#tuple)**__,__ **[`Range`](#range)**__,__ **[`Enumerate`](#enumerate)**__,__ **[`Iterator`](#iterator)**__,__ **[`Generator`](#generator)**__.__  
@@ -16,29 +15,31 @@
 **&nbsp;&nbsp;&nbsp;** **8. Мультимедиа:** **&nbsp;&nbsp;**  **[`NumPy`](#numpy)**__,__ **[`Image`](#image)**__,__ **[`Animation`](#animation)**__,__ **[`Audio`](#audio)**__,__ **[`Synthesizer`](#synthesizer)**__,__ **[`Pygame`](#pygame)**__,__ **[`Pandas`](#pandas)**__,__ **[`Plotly`](#plotly)**__.__
 
 
-Точка входа
+Main
 ----
+__Точка входа__
 ```python
 if __name__ == '__main__':      # Вызывает функцию main(), если файл был запущен как скрипт,
     main()                      # а не импортирован. 
 ```
 
 
-Список | List
+List
 ----
+__Список__
 ```python
-<список> = <список>[<срез>]        # Или: <список>[включительное_начало : исключительный_конец : ±шаг]
+<list> = <list>[<slice>]        # Или: <list>[включительное_начало : исключительный_конец : ±шаг]
 ```
 
 ```python
-<list>.append(<элемент>)             # Или: <list> += [<элемент>]
-<list>.extend(<набор>)     # Или: <list> += <набор>
+<list>.append(<el>)             # Или: <list> += [<el>]
+<list>.extend(<collection>)     # Или: <list> += <collection>
 ```
 
 ```python
 <list>.sort()                   # Сортировка по возрастанию в исходном списке.
 <list>.reverse()                # Развернуть список в обратном порядке в исходном списке.
-<list> = sorted(<набор>)        # Возвращает новый отсортированный список не меняя исходный.
+<list> = sorted(<collection>)   # Возвращает новый отсортированный список не меняя исходный.
 <iter> = reversed(<list>)       # Возвращает новый развернутый список не меняя исходный.
 ```
 
@@ -51,48 +52,58 @@ flatter_list     = list(itertools.chain.from_iterable(<list>))
 product_of_elems = functools.reduce(lambda out, el: out * el, <collection>)
 list_of_chars    = list(<str>)
 ```
-* **For details about sorted(), min() and max() see [sortable](#sortable).**
-* **Module [operator](#operator) provides functions itemgetter() and mul() that offer the same functionality as [lambda](#lambda) expressions above.**
+* **Подробности касательно функций sorted(), min() и max() можно найти в разделе [sortable](#sortable).**
+* **Модуль [operator](#operator) предоставляет доступ к функциям itemgetter() и mul() они предоставляют тот же функционал, что и описаные выше [lambda](#lambda) выражения.**
 
 ```python
-<list>.insert(<int>, <el>)      # Inserts item at index and moves the rest to the right.
-<el>  = <list>.pop([<int>])     # Removes and returns item at index or from the end.
-<int> = <list>.count(<el>)      # Returns number of occurrences. Also works on strings.
-<int> = <list>.index(<el>)      # Returns index of the first occurrence or raises ValueError.
-<list>.remove(<el>)             # Removes first occurrence of the item or raises ValueError.
-<list>.clear()                  # Removes all items. Also works on dictionary and set.
+<list>.insert(<int>, <el>)   # Вставляет элемент по индексу и смещает остальные элементы вправо.
+<el>  = <list>.pop([<int>])  # Удаляет элемент по индексу и возвращает его или последний эелемент.
+<int> = <list>.count(<el>)   # Возвращает число повторов элемента. Также работает на строках.
+<int> = <list>.index(<el>)   # Возвращает индекс искомого элемента или возвращает ValueError.
+<list>.remove(<el>)          # Удаляет элемент по его значению или возвращает ValueError.
+<list>.clear()               # Очищает список удаляя все его элементы. Аналогично для 
+                                                                      # словарей и можеств.
 ```
 
 
 Dictionary
 ----------
+__Словарь__
 ```python
-<view> = <dict>.keys()                          # Coll. of keys that reflects changes.
-<view> = <dict>.values()                        # Coll. of values that reflects changes.
-<view> = <dict>.items()                         # Coll. of key-value tuples that reflects chgs.
+<view> = <dict>.keys()                          # Набор ключей словаря отображающих изменения.
+<view> = <dict>.values()                        # Набор значений словаря отображающих изменения.
+<view> = <dict>.items()                         # Набор пар ключ-значение отображающих изменения.
 ```
 
 ```python
-value  = <dict>.get(key, default=None)          # Returns default if key is missing.
-value  = <dict>.setdefault(key, default=None)   # Returns and writes default if key is missing.
-<dict> = collections.defaultdict(<type>)        # Returns a dict with default value `<type>()`.
-<dict> = collections.defaultdict(lambda: 1)     # Returns a dict with default value 1.
+value  = <dict>.get(key, default=None)          # Возвращает значение по-умолчанию, 
+                                                # при отсутствии искомого ключа.
+value  = <dict>.setdefault(key, default=None)   # Возвращает значение по ключу, если ключ 
+                                                # отсутств., то записывает значение по-умолчанию.
+<dict> = collections.defaultdict(<type>)        # Возвращает словарь 
+                                                # со значениями по-умолчанию типа `<type>()`.
+<dict> = collections.defaultdict(lambda: 1)     # Врзвращает словарь со значением по-умолчанию 1.
 ```
 
 ```python
-<dict> = dict(<collection>)                     # Creates a dict from coll. of key-value pairs.
-<dict> = dict(zip(keys, values))                # Creates a dict from two collections.
-<dict> = dict.fromkeys(keys [, value])          # Creates a dict from collection of keys.
+<dict> = dict(<collection>)                     # Создаёт словарь из набора пар ключ-значение.
+<dict> = dict(zip(keys, values))                # Создаёт словарь из двух наборов.
+<dict> = dict.fromkeys(keys [, value])          # Создаёт словарь из набора ключей.
 ```
 
 ```python
-<dict>.update(<dict>)                           # Adds items. Replaces ones with matching keys.
-value = <dict>.pop(key)                         # Removes item or raises KeyError if missing.
-{k for k, v in <dict>.items() if v == value}    # Returns set of keys that point to the value.
-{k: v for k, v in <dict>.items() if k in keys}  # Returns a dictionary, filtered by keys.
+<dict>.update(<dict>)                           # Добавляет пары. Заменяет, если ключ совпал.
+value = <dict>.pop(key)                         # Удаляет пару по ключу или возвр. KeyError,
+                                                # если ключ отсутствует.
+{k for k, v in <dict>.items() if v == value}    # Возвращает ключи хранящие указанное значение.
+{k: v for k, v in <dict>.items() if k in keys}  # Возвращает словарь отфильтрованный по
+                                                                                # набору ключей.
 ```
 
 ### Counter
+__Счётчик__  
+Используется для подсчета хешируемых объектов.  
+Объект типа Counter это неупорядоченная коллекция, в которой элементы хранятся как ключи словаря, а их счетчики являются значениями.
 ```python
 >>> from collections import Counter
 >>> colors = ['blue', 'blue', 'blue', 'red', 'red']
@@ -106,33 +117,39 @@ Counter({'blue': 3, 'red': 2, 'yellow': 1})
 
 Set
 ---
+__Множество__
 ```python
-<set> = set()                                   # `{}` returns a dictionary.
+<set> = set()                                   # `{}` возвращает словарь. Поэтому для создания
+                                                # множества используется конструктор set().
 ```
 
 ```python
-<set>.add(<el>)                                 # Or: <set> |= {<el>}
-<set>.update(<collection> [, ...])              # Or: <set> |= <set>
+<set>.add(<el>)                                 # Добавляет элемент, аналогично: <set> |= {<el>}
+<set>.update(<collection> [, ...])              # Обновляет множ., аналогично: <set> |= <set>
 ```
 
 ```python
-<set>  = <set>.union(<coll.>)                   # Or: <set> | <set>
-<set>  = <set>.intersection(<coll.>)            # Or: <set> & <set>
-<set>  = <set>.difference(<coll.>)              # Or: <set> - <set>
-<set>  = <set>.symmetric_difference(<coll.>)    # Or: <set> ^ <set>
-<bool> = <set>.issubset(<coll.>)                # Or: <set> <= <set>
-<bool> = <set>.issuperset(<coll.>)              # Or: <set> >= <set>
+<set>  = <set>.union(<coll.>)                   # Объединение, аналогично: <set> | <set>
+<set>  = <set>.intersection(<coll.>)            # Пересечение, аналогично: <set> & <set>
+<set>  = <set>.difference(<coll.>)              # Разность, аналогично: <set> - <set>
+<set>  = <set>.symmetric_difference(<coll.>)    # Симметрическая разность, аналог.: <set> ^ <set>
+<bool> = <set>.issubset(<coll.>)                # Является подмножеством, аналог.: <set> <= <set>
+<bool> = <set>.issuperset(<coll.>)              # Является надмножеством, аналог.: <set> >= <set>
 ```
 
 ```python
-<el> = <set>.pop()                              # Raises KeyError if empty.
-<set>.remove(<el>)                              # Raises KeyError if missing.
-<set>.discard(<el>)                             # Doesn't raise an error.
+<el> = <set>.pop()                              # Возвращает случайный элемент из множества.
+                                                # Возвращает KeyError, если множество пустое.
+<set>.remove(<el>)                              # Удаляет элемент из множества по его значению.
+                                                # Возвращает KeyError, если элемент отсутствует.
+<set>.discard(<el>)                             # Удаляет элемент из множества по его значению.
+                                                # Не возвращает ошибку, если элемент отсутствует.
 ```
 
 ### Frozen Set
-* **Is immutable and hashable.**
-* **That means it can be used as a key in a dictionary or as an element in a set.**
+__Застывшее множество__
+* **Неизменяемо и хэшируемо.**
+* **Следвательно, можно использовать как ключ словаря или элемента обычного множества.**
 ```python
 <frozenset> = frozenset(<collection>)
 ```
@@ -140,15 +157,18 @@ Set
 
 Tuple
 -----
-**Tuple is an immutable and hashable list.**
+__Кортеж__  
+**Кортеж - это неизменяемый и хешируемый аналог списока.**
 ```python
-<tuple> = ()                               # Empty tuple.
-<tuple> = (<el>,)                          # Or: <el>,
-<tuple> = (<el_1>, <el_2> [, ...])         # Or: <el_1>, <el_2> [, ...]
+<tuple> = ()                               # Создаёт пустой кортеж.
+<tuple> = (<el>,)                          # Создаёт кортеж из одного элемента, аналогично: <el>,
+<tuple> = (<el_1>, <el_2> [, ...])         # Создаёт кортеж из нескольких элементов,
+                                           # аналогично: <el_1>, <el_2> [, ...]
 ```
 
 ### Named Tuple
-**Tuple's subclass with named elements.**
+__Именованный кортеж__  
+**Подкласс кортежа с именованными элементами.**
 
 ```python
 >>> from collections import namedtuple
@@ -166,11 +186,15 @@ Point(x=1, y=2)
 
 Range
 -----
-**Immutable and hashable sequence of integers.**
+__Последовательность чисел__  
+**Неизменяемая и хешируемая последовательность чисел.**
 ```python
-<range> = range(stop)                      # range(to_exclusive)
-<range> = range(start, stop)               # range(from_inclusive, to_exclusive)
-<range> = range(start, stop, ±step)        # range(from_inclusive, to_exclusive, ±step_size)
+<range> = range(stop)                      # Создаёт последовательность 
+                                           # до значения `stop`, не включая его.
+<range> = range(start, stop)               # Создаёт последовательность от значения `start` 
+                                           # до значения `stop`, не включая его.
+<range> = range(start, stop, ±step)        # Создаёт последовательность от значения `start` 
+                                           # до значения `stop`, с шагом `step`.
 ```
 
 ```python
@@ -181,6 +205,7 @@ Range
 
 Enumerate
 ---------
+__Нумерация__
 ```python
 for i, el in enumerate(<collection> [, i_start]):
     ...
@@ -189,9 +214,11 @@ for i, el in enumerate(<collection> [, i_start]):
 
 Iterator
 --------
+__Итератор__
 ```python
-<iter> = iter(<collection>)                # `iter(<iter>)` returns unmodified iterator.
-<iter> = iter(<function>, to_exclusive)    # A sequence of return values until 'to_exclusive'.
+<iter> = iter(<collection>)                # `iter(<iter>)` вернёт неизменённый итератор.
+<iter> = iter(<function>, to_exclusive)    # Последовательность возвращаемых функцией значений
+                                           # до 'to_exclusive', но не включая его.
 <el>   = next(<iter> [, default])          # Raises StopIteration or returns 'default' on end.
 <list> = list(<iter>)                      # Returns a list of iterator's remaining elements.
 ```
