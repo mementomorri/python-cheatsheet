@@ -102,6 +102,7 @@ value = <dict>.pop(key)                         # Удаляет пару по �
 
 ### Counter
 __Счётчик__  
+  
 Используется для подсчета хешируемых объектов.  
 Объект типа Counter это неупорядоченная коллекция, в которой элементы хранятся как ключи словаря, а их счетчики являются значениями.
 ```python
@@ -147,7 +148,8 @@ __Множество__
 ```
 
 ### Frozen Set
-__Застывшее множество__
+__Застывшее множество__  
+  
 * **Неизменяемо и хэшируемо.**
 * **Следвательно, можно использовать как ключ словаря или элемента обычного множества.**
 ```python
@@ -158,6 +160,7 @@ __Застывшее множество__
 Tuple
 -----
 __Кортеж__  
+  
 **Кортеж - это неизменяемый и хешируемый аналог списока.**
 ```python
 <tuple> = ()                               # Создаёт пустой кортеж.
@@ -168,6 +171,7 @@ __Кортеж__
 
 ### Named Tuple
 __Именованный кортеж__  
+  
 **Подкласс кортежа с именованными элементами.**
 
 ```python
@@ -187,6 +191,7 @@ Point(x=1, y=2)
 Range
 -----
 __Последовательность чисел__  
+  
 **Неизменяемая и хешируемая последовательность чисел.**
 ```python
 <range> = range(stop)                      # Создаёт последовательность 
@@ -214,41 +219,50 @@ for i, el in enumerate(<collection> [, i_start]):
 
 Iterator
 --------
-__Итератор__
+__Итератор__  
 ```python
 <iter> = iter(<collection>)                # `iter(<iter>)` вернёт неизменённый итератор.
 <iter> = iter(<function>, to_exclusive)    # Последовательность возвращаемых функцией значений
                                            # до 'to_exclusive', но не включая его.
-<el>   = next(<iter> [, default])          # Raises StopIteration or returns 'default' on end.
-<list> = list(<iter>)                      # Returns a list of iterator's remaining elements.
+<el>   = next(<iter> [, default])          # Возвращает ошибку StopIteration 
+                                           # или значение 'default' в конце.
+<list> = list(<iter>)                      # Возвращает список оставщися элементов итератора.
 ```
 
 ### Itertools
+__Модуль itertools__  
+Itertool — это модуль, который предоставляет различные функции, работающие с итераторами для создания комплексных итераторов.
 ```python
 import itertools as it
 ```
 
 ```python
-<iter> = it.count(start=0, step=1)         # Returns updated value endlessly. Accepts floats.
-<iter> = it.repeat(<el> [, times])         # Returns element endlessly or 'times' times.
-<iter> = it.cycle(<collection>)            # Repeats the sequence endlessly.
+<iter> = it.count(start=0, step=1)         # Возвращает значения начиная с числа `start`
+                                           # бесконечно. Опционально принимает тип `float`.
+<iter> = it.repeat(<el> [, times])         # Возвращает указнный элемент бесконечно 
+                                           # или `times` раз.
+<iter> = it.cycle(<collection>)            # Бесконечно повторяет последовательность из набора.
 ```
 
 ```python
-<iter> = it.chain(<coll>, <coll> [, ...])  # Empties collections in order (figuratively).
-<iter> = it.chain.from_iterable(<coll>)    # Empties collections inside a collection in order.
+<iter> = it.chain(<coll>, <coll> [, ...])  # Опустошает набор элентов в переданном порядке.
+                                           # "Связывает" аргументы вместе, если использовать
+                                                                                # list()
+<iter> = it.chain.from_iterable(<coll>)    # Опустошает набор элементов внутри набора.
 ```
 
 ```python
-<iter> = it.islice(<coll>, to_exclusive)   # Only returns first 'to_exclusive' elements.
-<iter> = it.islice(<coll>, from_inc, …)    # `to_exclusive, +step_size`. Indices can be None.
+<iter> = it.islice(<coll>, to_exclusive)   # Возвращает первые 'to_exclusive' элементов.
+<iter> = it.islice(<coll>, from_inc, …)    # `to_exclusive, +step_size`. Индексы могут быть None.
 ```
 
 
 Generator
 ---------
-* **Any function that contains a yield statement returns a generator.**
-* **Generators and iterators are interchangeable.**
+__Генератор__  
+  
+* **Любая функция содержащая оператор `yield` возвращает генератор.**
+* **Генераторы и итераторы взаимозаменяемы.**
 
 ```python
 def count(start, step):
@@ -266,13 +280,15 @@ def count(start, step):
 
 Type
 ----
-* **Everything is an object.**
-* **Every object has a type.**
-* **Type and class are synonymous.**
+__Тип__  
+  
+* **Всё является объетом.**
+* **У каждого объекта есть тип.**
+* **Тип и класс объекта это синонимы.**
 
 ```python
-<type> = type(<el>)                          # Or: <el>.__class__
-<bool> = isinstance(<el>, <type>)            # Or: issubclass(type(<el>), <type>)
+<type> = type(<el>)                # Или используя свойство: <el>.__class__
+<bool> = isinstance(<el>, <type>)  # Или используя функцию `type`: issubclass(type(<el>), <type>)
 ```
 
 ```python
@@ -280,13 +296,15 @@ Type
 (<class 'str'>, <class 'str'>, <class 'str'>)
 ```
 
-#### Some types do not have built-in names, so they must be imported:
+#### Некоторые типы объектов не имеют встроенных имёт, поэтому их нужно импортировать, например:
 ```python
 from types import FunctionType, MethodType, LambdaType, GeneratorType, ModuleType
 ```
 
 ### Abstract Base Classes
-**Each abstract base class specifies a set of virtual subclasses. These classes are then recognized by isinstance() and issubclass() as subclasses of the ABC, although they are really not. ABC can also manually decide whether or not a specific class is its virtual subclass, usually based on which methods the class has implemented. For instance, Iterable ABC looks for method iter(), while Collection ABC looks for iter(), contains() and len().**
+__Абстрактный базовый класс (ABC)__  
+  
+**Каждый абстрактный базовый класс определяет набор виртуальных подклассов. Эти классы затем распознаются функциями isinstance() и issubclass() как подклассы ABC, хотя на самом деле это не так. ABC также может вручную решить, является ли конкретный класс его виртуальным подклассом, обычно на основе того, какие методы реализованы в классе. Например, Iterable ABC ищет метод iter(), а Collection ABC ищет iter(), contains() и len().**
 
 ```python
 >>> from collections.abc import Iterable, Collection, Sequence
@@ -295,13 +313,13 @@ True
 ```
 
 ```text
-+------------------+------------+------------+------------+
-|                  |  Iterable  | Collection |  Sequence  |
-+------------------+------------+------------+------------+
-| list, range, str |    yes     |    yes     |    yes     |
-| dict, set        |    yes     |    yes     |            |
-| iter             |    yes     |            |            |
-+------------------+------------+------------+------------+
++------------------+------------+------------+----------------------+
+|                  |  Итератор  |    Набор   |  Последовательность  |
++------------------+------------+------------+----------------------+
+| list, range, str |     +      |     +      |          +           |
+| dict, set        |     +      |     +      |                      |
+| iter             |     +      |            |                      |
++------------------+------------+------------+----------------------+
 ```
 
 ```python
@@ -311,67 +329,86 @@ True
 ```
 
 ```text
-+--------------------+----------+----------+----------+----------+----------+
-|                    |  Number  |  Complex |   Real   | Rational | Integral |
-+--------------------+----------+----------+----------+----------+----------+
-| int                |   yes    |   yes    |   yes    |   yes    |   yes    |
-| fractions.Fraction |   yes    |   yes    |   yes    |   yes    |          |
-| float              |   yes    |   yes    |   yes    |          |          |
-| complex            |   yes    |   yes    |          |          |          |
-| decimal.Decimal    |   yes    |          |          |          |          |
-+--------------------+----------+----------+----------+----------+----------+
++--------------------+----------+-------------+----------------+--------------+-------+
+|                    |  Число   | Комплексное | Действительное | Рациональное | Целое |
++--------------------+----------+-------------+----------------+--------------+-------+
+| int                |    +     |      +      |       +        |      +       |   +   |
+| fractions.Fraction |    +     |      +      |       +        |      +       |       |
+| float              |    +     |      +      |       +        |              |       |
+| complex            |    +     |      +      |                |              |       |
+| decimal.Decimal    |    +     |             |                |              |       |
++--------------------+----------+-------------+----------------+--------------+-------+
 ```
 
 
 String
 ------
-**Immutable sequence of characters.**
+__Строка__  
+  
+**Неизменяемая последовательность символов.**
 
 ```python
-<str>  = <str>.strip()                       # Strips all whitespace characters from both ends.
-<str>  = <str>.strip('<chars>')              # Strips passed characters. Also lstrip/rstrip().
+<str>  = <str>.strip()                       # Удаляет все неотображаемые символы и разделители.
+<str>  = <str>.strip('<chars>')              # Удаляет переданные символы.
+                                             # Аналогично для lstrip/rstrip().
 ```
 
 ```python
-<list> = <str>.split()                       # Splits on one or more whitespace characters.
-<list> = <str>.split(sep=None, maxsplit=-1)  # Splits on 'sep' str at most 'maxsplit' times.
-<list> = <str>.splitlines(keepends=False)    # On [\n\r\f\v\x1c-\x1e\x85\u2028\u2029] and \r\n.
-<str>  = <str>.join(<coll_of_strings>)       # Joins elements using string as a separator.
+<list> = <str>.split()                       # Разделяет строку на список по неотображ. символу.
+<list> = <str>.split(sep=None, maxsplit=-1)  # Разделяет строку по разделителю 'sep',
+                                             # максимум 'maxsplit' раз.
+<list> = <str>.splitlines(keepends=False)    # Разбивает строку на список строк по переносам:
+                                             # [\n\r\f\v\x1c-\x1e\x85\u2028\u2029] и \r\n.
+<str>  = <str>.join(<coll_of_strings>)       # Объединяет элементы,
+                                             # используя строку как разделитель.
 ```
 
 ```python
-<bool> = <sub_str> in <str>                  # Checks if string contains the substring.
-<bool> = <str>.startswith(<sub_str>)         # Pass tuple of strings for multiple options.
-<int>  = <str>.find(<sub_str>)               # Returns start index of the first match or -1.
-<int>  = <str>.index(<sub_str>)              # Same, but raises ValueError if missing.
+<bool> = <sub_str> in <str>                  # Проверяет, является ли одна строка
+                                             # подстрокой второй.
+<bool> = <str>.startswith(<sub_str>)         # Проверяет, начинается ли строка с указанного 
+                                             # символа. Опционально принимает кортеж символов.
+<int>  = <str>.find(<sub_str>)               # Возвращает начальный индекс искомой строки или -1.
+<int>  = <str>.index(<sub_str>)              # Аналогично, но возвращает ValueError
+                                                          # при отсутствии искомой строки.
 ```
 
 ```python
-<str>  = <str>.lower()                       # Changes the case. Also upper/capitalize/title().
-<str>  = <str>.replace(old, new [, count])   # Replaces 'old' with 'new' at most 'count' times.
-<str>  = <str>.translate(<table>)            # Use `str.maketrans(<dict>)` to generate table.
+<str>  = <str>.lower()                       # Изменяет регистр на нижний. 
+                                             # Аналогично для upper/capitalize/title().
+<str>  = <str>.replace(old, new [, count])   # Заменятеи 'old' на 'new' максимум 'count' раз.
+<str>  = <str>.translate(<table>)            # `str.maketrans(<dict>)` для создания арг. `table`.
 ```
 
 ```python
-<str>  = chr(<int>)                          # Converts int to Unicode character.
-<int>  = ord(<str>)                          # Converts Unicode character to int.
+<str>  = chr(<int>)                          # Конвертирует `int` в строку формата Unicode.
+<int>  = ord(<str>)                          # Конвертирунт символ формата Unicode в `int`.
 ```
-* **Use `'unicodedata.normalize("NFC", <str>)'` on strings like `'Motörhead'` before comparing them to other strings, because `'ö'` can be stored as one or two characters.**
-* **`'NFC'` converts such characters to a single character, while `'NFD'` converts them to two.**
+* **Используй `'unicodedata.normalize("NFC", <str>)'` на таких строках как `'Motörhead'`, перед тем как сравнивать их с другими строками, поскольку символ `'ö'` может быть записан как один или несколько символов.**
+* **Аргумент `'NFC'` конвертирует такие символы в одиночные, тогда как аргумент `'NFD'` конвертирует их в два символа.**
 
 ### Property Methods
+__Методы свойств строк__
 ```python
-<bool> = <str>.isdecimal()                   # Checks for [0-9]. Also [०-९] and [٠-٩].
-<bool> = <str>.isdigit()                     # Checks for [²³¹…] and isdecimal().
-<bool> = <str>.isnumeric()                   # Checks for [¼½¾], [零〇一…] and isdigit().
-<bool> = <str>.isalnum()                     # Checks for [a-zA-Z…] and isnumeric().
-<bool> = <str>.isprintable()                 # Checks for [ !#$%…] and isalnum().
-<bool> = <str>.isspace()                     # Checks for [ \t\n\r\f\v\x1c-\x1f\x85\xa0…].
+<bool> = <str>.isdecimal()                   # Проверяет на наличие символов [0-9].
+                                             # Аналогично [०-९] и [٠-٩].
+<bool> = <str>.isdigit()                     # Проверяет на наличие символов [²³¹…]
+                                             # и isdecimal().
+<bool> = <str>.isnumeric()                   # Проверяет на наличие символов [¼½¾], [零〇一…]
+                                             # и isdigit().
+<bool> = <str>.isalnum()                     # Проверяет на наличие символов [a-zA-Z…]
+                                             # и isnumeric().
+<bool> = <str>.isprintable()                 # Проверяет на наличие символов [ !#$%…]
+                                             # и isalnum().
+<bool> = <str>.isspace()                     # Проверяет на наличие символов 
+                                             # [ \t\n\r\f\v\x1c-\x1f\x85\xa0…].
 ```
 
 
 Regex
 -----
+__Регулярные выражения__  
+  
 **Functions for regular expression matching.**
 
 ```python
