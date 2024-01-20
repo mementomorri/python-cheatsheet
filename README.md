@@ -409,33 +409,35 @@ Regex
 -----
 __Регулярные выражения__  
   
-**Functions for regular expression matching.**
+**Функции для сопоставления регулярных выражений.**
 
 ```python
 import re
-<str>   = re.sub(<regex>, new, text, count=0)  # Substitutes all occurrences with 'new'.
-<list>  = re.findall(<regex>, text)            # Returns all occurrences as strings.
-<list>  = re.split(<regex>, text, maxsplit=0)  # Add brackets around regex to include matches.
-<Match> = re.search(<regex>, text)             # First occurrence of the pattern or None.
-<Match> = re.match(<regex>, text)              # Searches only at the beginning of the text.
-<iter>  = re.finditer(<regex>, text)           # Returns all occurrences as Match objects.
+<str>   = re.sub(<regex>, new, text, count=0)  # Заменяет все случаи совпадения на 'new'.
+<list>  = re.findall(<regex>, text)            # Возвращает все найденные совпавшие строки.
+<list>  = re.split(<regex>, text, maxsplit=0)  # Разбивает строку используя паттерн как делитель.
+<Match> = re.search(<regex>, text)             # Возвращает первый случай совпадения или None.
+<Match> = re.match(<regex>, text)              # Ищет только в начале текста.
+<iter>  = re.finditer(<regex>, text)           # Возвращает все случаи как объект `Match`.
 ```
 
-* **Argument 'new' can be a function that accepts a Match object and returns a string.**
-* **Argument `'flags=re.IGNORECASE'` can be used with all functions.**
-* **Argument `'flags=re.MULTILINE'` makes `'^'` and `'$'` match the start/end of each line.**
-* **Argument `'flags=re.DOTALL'` makes `'.'` also accept the `'\n'`.**
-* **Use `r'\1'` or `'\\1'` for backreference (`'\1'` returns a character with octal code 1).**
-* **Add `'?'` after `'*'` and `'+'` to make them non-greedy.**
-* **`'re.compile(<regex>)'` returns a Pattern object with listed methods.**
+* **Аргумент «new» может быть функцией, которая принимает объект Match и возвращает строку.**
+* **Аргумент `'flags=re.IGNORECASE'` может быть применен ко всем функциям.**
+* **Аргумент `'flags=re.MULTILINE'` заставляет `'^'` и `'$'` соответствовать началу/концу каждой строки.**
+* **Аргумент `'flags=re.DOTALL'` заставляет `'.'` также принимать `'\n'`.**
+* **Используй `'\1'` или `'\\1'` для обратной ссылки (`'\1'` возвращает символ с восьмеричным кодом 1).**
+* **Добавь `'?'` после `'*'` и `'+'`, чтобы сделать их non-greedy.**
+* **`'re.compile(<regex>)'` возвращает объект Pattern работающий со всеми перечисленными выше методами.**
 
 ### Match Object
+__Объект типа Match__
 ```python
-<str>   = <Match>.group()                      # Returns the whole match. Also group(0).
-<str>   = <Match>.group(1)                     # Returns part inside the first brackets.
-<tuple> = <Match>.groups()                     # Returns all bracketed parts.
-<int>   = <Match>.start()                      # Returns start index of the match.
-<int>   = <Match>.end()                        # Returns exclusive end index of the match.
+<str>   = <Match>.group([<group1>, ...])       # Возвращает указанные захваченные группы из
+                                                                                  # совпадения.
+<str>   = <Match>.group(1)                     # Возвращает часть внутри первых скобок паттерна.
+<tuple> = <Match>.groups()                     # Возвращает все захваченные группы из совпадения.
+<int>   = <Match>.start()                      # Возвращает начальный индекс совпадения.
+<int>   = <Match>.end()                        # Возвращает закрывающий индекс совпадения.
 ```
 
 ### Special Sequences
@@ -3640,3 +3642,4 @@ Index
 * **Only available in the [PDF](https://transactions.sendowl.com/products/78175486/4422834F/view).**
 * **Ctrl+F / ⌘F is usually sufficient.**
 * **Searching `'#<title>'` on the [webpage](https://gto76.github.io/python-cheatsheet/) will limit the search to the titles.**
+
